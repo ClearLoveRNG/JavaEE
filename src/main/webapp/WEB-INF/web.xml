@@ -5,6 +5,31 @@
                                    http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          metadata-complete="false"
          version="3.1">
+    <!--                               web.xml配置文件加载顺序
+
+        1. Web项目启动的时候，容器（如：tomcat）读取webapp/WEB-INF/web.xml文件，读取<context-param>和<listener>；
+
+        2. 创建ServletContex，Web项目所有部分都可以使用该上下文ServletContex；
+
+        3. 容器将<context-param></context-param>解析为key-value对,并交给ServletContext；
+
+        4. 容器根据<listener></listener>中的类创建监听实例,即启动监听；
+
+        5. listener监听类中会contextInitialized(ServletContextEvent servletContextEvent)初始化方法,可通过ServletContextEvent.getServletContext().getInitParameter("field")获得value的值；
+
+        6. 解析<filters></filters>,并启动拦截器 拦截器开始起作用,当有请求进入时,执行Filter的doFilter方法；
+
+        7. 最后加载和初始化配置在load on startup的servlets;
+
+        8. 加载Spring,如果filter需要用到bean,但加载顺序是： 先加载filter 后加载spring，则filter中初始化操作中的bean为null.
+           如果过滤器中要使用到 bean，可以将spring 的加载 改成 Listener的方式 :
+           <listener>  
+                <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>  
+           </listener>
+    -->
+
+
+
     <!--
         1.在JavaEE里要使用Spring，就要使Web加载Spring的配置文件
         换句话说，就是让Web启动的同时，加载Spring，所以，需要使用监听器，并且要继承ServletContextListener，

@@ -12,29 +12,29 @@
      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
      http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-    <context:annotation-config />
-    <context:component-scan base-package="com.demo"/>
 
+    <!--Spring的配置文件主要作用是，扫描service层，设置数据源，事务，配置Mybatis的SqlSession和接口扫描器等-->
+
+    <!--1.扫描Service层，交由Spring管理-->
+    <context:component-scan base-package="com.demo.service"/>
+
+    <!--2.设置数据源，这里使用Spring提供的，没用Mybatis的，这样方便管理-->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName">
-            <value>com.mysql.jdbc.Driver</value>
-        </property>
-        <property name="url">
-            <value>jdbc:mysql://localhost:3306/test?characterEncoding=UTF-8</value>
-        </property>
-        <property name="username">
-            <value>root</value>
-        </property>
-        <property name="password">
-            <value>root</value>
-        </property>
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/test?characterEncoding=UTF-8"/>
+        <property name="username" value="root"/>
+        <property name="password" value="root"/>
     </bean>
 
+    <!--3.设置Mybatis的工厂-->
     <bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 绑定数据源 -->
         <property name="dataSource" ref="dataSource"/>
+        <!-- 配置Mybatis的配置文件的路径，该配置文件里是真正的sql -->
         <property name="mapperLocations" value="classpath:mapperXml/*.xml"/>
     </bean>
 
+    <!--4.配置扫描Mybatis配置文件对应的接口，或者对应接口的实现类所在的包，统一交给Spring管理-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.demo.dao"/>
     </bean>

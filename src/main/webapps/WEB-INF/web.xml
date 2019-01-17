@@ -7,9 +7,9 @@
          version="3.1">
     <!--                               web.xml配置文件加载顺序
 
-        1. Web项目启动的时候，容器（如：tomcat）读取webapp/WEB-INF/web.xml文件，读取<context-param>和<listener>；
+        1. Web项目启动的时候，容器（如：tomcat）读取webapps/WEB-INF/web.xml文件，读取<context-param>和<listener>；
 
-        2. 创建ServletContex，Web项目所有部分都可以使用该上下文ServletContex；
+        2. 创建ServletContext，Web项目所有部分都可以使用该上下文ServletContext；
 
         3. 容器将<context-param></context-param>解析为key-value对,并交给ServletContext；
 

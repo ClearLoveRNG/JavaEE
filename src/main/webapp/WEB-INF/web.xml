@@ -46,7 +46,7 @@
         但如果想自定义路径，就必须要加如下的代码，表示在上下文加载的时候设置参数，参数名是contextConfigLocation，
         为什么叫这个，是因为这是Spring定义好的字段，Spring的监听器ContextLoaderListener会获取上下文的参数，而这个参数的名字，就是contextConfigLocation，
         而参数的值是你xml文件的路径，classpath表示的是classes目录，还有一种写法classpath*，这个表示
-        不仅会从classess目录找，还会去jar包底下找，虽然查找范围广，但是速度肯定要慢一些，所以还是要统一管理好配置文件，
+        不仅会从classes目录找，还会去jar包底下找，虽然查找范围广，但是速度肯定要慢一些，所以还是要统一管理好配置文件，
         如果有多个配置文件需要加载，则用在每个配置文件之间用逗号隔开。
         如果既没有applicationContext.xml文件，也没有使用contextConfigLocation参数确定配置文件，或者contextConfigLocation确定的配置文件不存在。
         都将导致Spring无法加载配置文件或无法正常创建ApplicationContext 实例
@@ -80,8 +80,8 @@
         Spring也给我们提供了，叫DispatcherServlet，所以加上如下的代码，但是呢，Servlet的初始化是在调用servlet时候才进行，
         而我们的许多配置要在启动Web的时候就加载，所以要设置该Servlet为自启动，使得在Web加载的同时，该Servlet也开始加载。
         而加载的时候配置的文件，同样要通过参数的方式告诉SpringMVC，你要加载哪个配置文件，这个配置文件和Spring的配置文件不一样，这个是SpringMVC的配置，要区分开。
-        和加载Spring配置文件一样，SpringMVC加载的时候默认加载<servlet-name>标签里的名字加上横杠-，再加上servlet，比如下面的serlvet，SpringMVC会加载
-        /WEB-INF/mvc-dispatcher-serlvet.xml配置文件。当然自定义路径完全也可以，也要使用参数方式，
+        和加载Spring配置文件一样，SpringMVC加载的时候默认加载<servlet-name>标签里的名字加上横杠-，再加上servlet，比如下面的servlet，SpringMVC会加载
+        /WEB-INF/mvc-dispatcher-servlet.xml配置文件。当然自定义路径完全也可以，也要使用参数方式，
         参数名也是contextConfigLocation，是SpringMVC定义好的，参数值是配置文件的路径。
         <load-on-startup>标签就是用来自启动的，中间的数字，越小越优先加载，所以设置1就行了。
     -->

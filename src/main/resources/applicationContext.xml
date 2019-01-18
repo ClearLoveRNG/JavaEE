@@ -26,6 +26,66 @@
     <!--1.扫描Service层，交由Spring管理-->
     <context:component-scan base-package="com.demo.service"/>
 
+    <!--
+        ******************************************************
+                        这里说一下三个注解的区别
+        1.<context:annotation-config/>
+        要想使用@Autowired，@Resource 、@PostConstruct、@PreDestroy，@PersistenceContext，@Required注解，
+        就要在Spring的配置文件里注册AutowiredAnnotationBeanPostProcessor、RequiredAnnotationBeanPostProcessor、
+        CommonAnnotationBeanPostProcessor以及PersistenceAnnotationBeanPostProcessor这四个bean，但是都用bean标签注册太麻烦，
+        所以可以使用<context:annotation-config/>，让Spring去注册上面四个bean，让最开始的六个注解生效，但使用的前提是Spring容器里注册的该bean，
+        比如：
+            @Autowired
+            public DemoService demoService;
+
+            如果想让demoService顺利注入并使用，则前提是demoService已经在Spring容器里(在Spring配置文件里配置过的)，
+            如果不在容器里，则注入为null，而不是把DemoService注册到Spring的同时，再给你注入进来，所以这个注解很废物，只做了后半句话的事情，
+            前半句话它不管。
+        所以，这个注解的作用仅仅是让那六个注解可以使用，但不是凭空给你注册一个bean并给你使用。
+
+        2.<context:component-scan>
+        鉴于<context:annotation-config/>注解太废物，所以<context:component-scan>注解出现了，
+        它不仅能做到<context:annotation-config/>做的事情，还额外支持@Component，@Repository，@Service，@Controller，@RestController,@ControllerAdvice，@Configuration注解，
+        <context:component-scan>注解会扫描属性base-package的值，这个值是包路径，它会扫描这个路径下被上句话的七个注解修饰的类并且会注册到Spring容器里，
+        比如
+            <context:component-scan base-package="com.demo.service"/>
+            会扫描com.demo.service路径下被那七个注解修饰的类，然后注册成为Spring的bean，它们的生命周期可以由Spring管理了，
+            所以可以随时使用@Resource或者@Autowired来自动注入。
+        所以用了<context:component-scan>注解，就不需要<context:annotation-config/>注解了，前者把后者的事情都干了，而且还更强大。
+
+        3.<mvc:annotation-driven/>
+        这个注解是SpringMVC的，我们知道SpringMVC的作用，就是要让url和某个方法对应，而为了让这个对应关系生效，
+        <mvc:annotation-driven/>出现了，它的作用是向Spring中注册
+        （1）RequestMappingHandlerMapping
+        （2）BeanNameUrlHandlerMapping
+        （3）RequestMappingHandlerAdapter
+        （4）HttpRequestHandlerAdapter
+        （5）SimpleControllerHandlerAdapter
+        （6）ExceptionHandlerExceptionResolver
+        （7）ResponseStatusExceptionResolver
+        （8）DefaultHandlerExceptionResolver这八个bean，
+
+        注册了这八个bean就让url和方法对应上了，
+        前两个是HandlerMapping接口的实现类，用来处理请求映射的。
+
+        （1）是处理@RequestMapping注解的。
+        （2）会将controller类的名字映射为请求url。
+
+        中间三个是用来处理请求的。具体点说就是确定调用哪个controller的哪个方法来处理当前请求。
+        （3）处理@Controller注解的处理器，支持自定义方法参数和返回值（很酷）。
+        （4）是处理继承HttpRequestHandler的处理器。
+        （5）处理继承自Controller接口的处理器。
+
+        （6）（7）（8）是用来处理异常的解析器。
+
+        另外还将提供以下支持：
+        ① 支持使用ConversionService实例对表单参数进行类型转换；
+        ② 支持使用@NumberFormatannotation、@DateTimeFormat注解完成数据类型的格式化；
+        ③ 支持使用@Valid注解对Java bean实例进行JSR 303验证；
+        ④ 支持使用@RequestBody和@ResponseBody注解
+        ******************************************************
+    -->
+
     <!--2.设置数据源，这里使用Spring提供的，没用Mybatis的，这样方便管理-->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>

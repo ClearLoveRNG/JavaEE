@@ -37,4 +37,12 @@
         <property name="prefix" value="/WEB-INF/jsp/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
+
+    <!--5.配置拦截器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/*"/>
+            <bean class="com.demo.config.Interceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>

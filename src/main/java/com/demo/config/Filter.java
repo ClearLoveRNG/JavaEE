@@ -2,6 +2,7 @@ package com.demo.config;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**
@@ -13,7 +14,7 @@ import java.io.IOException;
  * Author: jianghaotian
  * Create Time:2019/1/18 10:38
  */
-@WebFilter(filterName = "Filter")
+@WebFilter(filterName = "Filter",urlPatterns = "/*")
 public class Filter implements javax.servlet.Filter {
     @Override
     public void destroy() {
@@ -21,7 +22,8 @@ public class Filter implements javax.servlet.Filter {
     }
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
-        System.out.println("doFilter");
+        HttpServletRequest request = (HttpServletRequest)req;
+        System.out.println(request.getRequestURI()+"__doFilter");
         chain.doFilter(req, resp);
     }
     @Override

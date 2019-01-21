@@ -7,4 +7,10 @@
     <select id="listDemo" resultType="com.demo.pojo.Demo">
         SELECT * FROM demo
     </select>
+    <select id="findDemoById" parameterType="int" resultType="com.demo.pojo.Demo">
+        SELECT * FROM demo where id = #{value}
+    </select>
+    <select id="findDemoByName" parameterType="string" resultType="com.demo.pojo.Demo">
+        SELECT * FROM demo where name LIKE '%${value}%'
+    </select>
 </mapper>

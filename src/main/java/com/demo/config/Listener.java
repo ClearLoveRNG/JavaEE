@@ -64,19 +64,19 @@ public class Listener implements ServletContextListener,
     @Override
     public void attributeAdded(HttpSessionBindingEvent sbe) {
       /* This method is called when an attribute 
-         is added to a session.
+         is added to simpledemo1 session.
       */
     }
     @Override
     public void attributeRemoved(HttpSessionBindingEvent sbe) {
       /* This method is called when an attribute
-         is removed from a session.
+         is removed from simpledemo1 session.
       */
     }
     @Override
     public void attributeReplaced(HttpSessionBindingEvent sbe) {
       /* This method is invoked when an attibute
-         is replaced in a session.
+         is replaced in simpledemo1 session.
       */
     }
 }

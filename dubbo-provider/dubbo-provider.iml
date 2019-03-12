@@ -73,5 +73,6 @@
     <orderEntry type="library" name="Maven: io.netty:netty:3.7.0.Final" level="project" />
     <orderEntry type="library" name="Maven: com.101tec:zkclient:0.5" level="project" />
     <orderEntry type="module" module-name="dubbo-api" />
+    <orderEntry type="library" name="Maven: com.rabbitmq:amqp-client:5.6.0" level="project" />
   </component>
 </module>
